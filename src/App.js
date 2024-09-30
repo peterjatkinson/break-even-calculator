@@ -156,7 +156,7 @@ const BreakEvenCalculator = () => {
         </div>
 
         <div style={{ 
-          flex: '1 1 300px', 
+          flex: '1 1 200px', 
           backgroundColor: '#f5f5f5', 
           padding: '20px', 
           borderRadius: '8px', 
