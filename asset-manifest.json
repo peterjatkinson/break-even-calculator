@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/break-even-calculator/static/css/main.e6c13ad2.css",
+    "main.js": "/break-even-calculator/static/js/main.ab8fe421.js",
+    "static/js/453.b86f7f00.chunk.js": "/break-even-calculator/static/js/453.b86f7f00.chunk.js",
+    "index.html": "/break-even-calculator/index.html",
+    "main.e6c13ad2.css.map": "/break-even-calculator/static/css/main.e6c13ad2.css.map",
+    "main.ab8fe421.js.map": "/break-even-calculator/static/js/main.ab8fe421.js.map",
+    "453.b86f7f00.chunk.js.map": "/break-even-calculator/static/js/453.b86f7f00.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.ab8fe421.js"
+  ]
+}
