@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 const BreakEvenCalculator = () => {
   const [newPlantCost, setNewPlantCost] = useState(1.25);
@@ -40,12 +40,13 @@ const BreakEvenCalculator = () => {
 
   const inputStyle = {
     margin: '5px 0',
-    padding: '8px',
+    padding: '12px',
     width: '100%',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
+    border: '2px solid #3498db',
+    borderRadius: '8px',
     fontSize: '16px',
-    boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    transition: 'all 0.3s ease',
   };
 
   const labelStyle = {
@@ -53,7 +54,15 @@ const BreakEvenCalculator = () => {
     marginTop: '15px',
     marginBottom: '5px',
     fontWeight: 'bold',
-    fontSize: '14px',
+    fontSize: '16px',
+    color: '#2c3e50',
+  };
+
+  const formatTooltip = (value, name, props) => {
+    if (typeof value === 'number') {
+      return value.toFixed(0); // This rounds to 0 decimal places
+    }
+    return value;
   };
 
   return (
@@ -61,12 +70,23 @@ const BreakEvenCalculator = () => {
       fontFamily: 'Arial, sans-serif', 
       maxWidth: '1200px', 
       margin: '0 auto', 
-      padding: '20px'
+      padding: '30px',
+      backgroundColor: '#ecf0f1',
+      borderRadius: '15px',
+      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)'
     }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>Break-Even Calculator</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+      <h1 style={{ textAlign: 'center', color: '#2c3e50', marginBottom: '30px', fontSize: '36px' }}>Break-even calculator</h1>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+        gap: '40px',
+        backgroundColor: '#ffffff',
+        padding: '30px',
+        borderRadius: '10px',
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.08)'
+      }}>
         <div>
-          <label style={labelStyle}>New Plant Cost (bn $)</label>
+          <label style={labelStyle}>New plant cost (bn $)</label>
           <input
             type="number"
             value={newPlantCost}
@@ -76,7 +96,7 @@ const BreakEvenCalculator = () => {
           />
         </div>
         <div>
-          <label style={labelStyle}>R&D Cost (bn $)</label>
+          <label style={labelStyle}>R&D cost (bn $)</label>
           <input
             type="number"
             value={rdCost}
@@ -86,7 +106,7 @@ const BreakEvenCalculator = () => {
           />
         </div>
         <div>
-          <label style={labelStyle}>Marketing Cost (bn $)</label>
+          <label style={labelStyle}>Marketing cost (bn $)</label>
           <input
             type="number"
             value={marketingCost}
@@ -96,7 +116,7 @@ const BreakEvenCalculator = () => {
           />
         </div>
         <div>
-          <label style={labelStyle}>Unit Production Cost (m $)</label>
+          <label style={labelStyle}>Unit production cost (m $)</label>
           <input
             type="number"
             value={unitProductionCost}
@@ -106,7 +126,7 @@ const BreakEvenCalculator = () => {
           />
         </div>
         <div>
-          <label style={labelStyle}>Price per Plane (m $)</label>
+          <label style={labelStyle}>Price per plane (m $)</label>
           <input
             type="number"
             value={pricePerPlane}
@@ -117,61 +137,57 @@ const BreakEvenCalculator = () => {
         </div>
       </div>
 
-      <h2 style={{ textAlign: 'center', margin: '30px 0 10px', color: '#4a4a4a' }}>
-        Break-Even Point: {breakEvenPoint.toFixed(1)} planes
+      <h2 style={{ textAlign: 'center', margin: '40px 0 20px', color: '#e74c3c', fontSize: '28px' }}>
+        Break-even point: {breakEvenPoint.toFixed(1)} planes
       </h2>
-
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-        <div style={{ marginRight: '20px', display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#8884d8', marginRight: '5px' }}></div>
-          Total Costs
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#82ca9d', marginRight: '5px' }}></div>
-          Total Revenue
-        </div>
-      </div>
 
       <div style={{ 
         display: 'flex', 
         flexDirection: 'row', 
         flexWrap: 'wrap', 
-        gap: '20px'
+        gap: '30px',
+        marginTop: '30px'
       }}>
-        <div style={{ flex: '1 1 600px' }}>
+        <div style={{ flex: '1 1 600px', backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.08)' }}>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 50, bottom: 25 }}>
-              <CartesianGrid strokeDasharray="3 3" />
+            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 25 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
               <XAxis 
                 dataKey="units" 
-                label={{ value: 'Units Sold', position: 'insideBottom', offset: -10 }}
+                label={{ value: 'Units Sold', position: 'insideBottom', offset: -10, fill: '#34495e' }}
+                stroke="#34495e"
                 tickFormatter={(value) => Math.round(value)}
               />
-              <YAxis label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft', offset: -40 }} />
-              <Tooltip />
-              <Line type="monotone" dataKey="totalCosts" stroke="#8884d8" name="Total Costs" />
-              <Line type="monotone" dataKey="totalRevenue" stroke="#82ca9d" name="Total Revenue" />
+              <YAxis label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft', offset: -5, fill: '#34495e' }} stroke="#34495e" />
+              <Tooltip 
+                contentStyle={{ backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' }}
+                formatter={formatTooltip}
+              />
+              <Legend verticalAlign="top" height={36} />
+              <Line type="monotone" dataKey="totalCosts" stroke="#e74c3c" name="Total costs" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="totalRevenue" stroke="#2ecc71" name="Total revenue" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         <div style={{ 
-          flex: '1 1 200px', 
-          backgroundColor: '#f5f5f5', 
-          padding: '20px', 
-          borderRadius: '8px', 
+          flex: '1 1 300px', 
+          backgroundColor: '#2c3e50', 
+          color: '#ecf0f1',
+          padding: '25px', 
+          borderRadius: '10px', 
           fontFamily: 'monospace', 
-          whiteSpace: 'pre-wrap'
+          whiteSpace: 'pre-wrap',
+          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)'
         }}>
-          <h3 style={{ marginTop: 0 }}>Calculations:</h3>
-          {`1. Sum the fixed costs:
+          <h3 style={{ marginTop: 0, color: '#3498db', fontSize: '24px' }}>Calculations:</h3>
+          {`1. Sum of fixed costs:
    ${newPlantCost.toFixed(2)} bn + ${rdCost.toFixed(2)} bn + ${marketingCost.toFixed(3)} bn = ${calculations.fixedCosts?.toFixed(3)} bn
 
-2. Calculate the profit per plane:
-   Profit per plane = Selling price - Unit production cost
+2. Profit per plane:
    ${pricePerPlane} m - ${unitProductionCost} m = ${calculations.profitPerPlane?.toFixed(1)} m
 
-3. Determine the break-even point:
+3. Break-even point:
    ${(calculations.fixedCosts * 1000).toFixed(3)} m / ${calculations.profitPerPlane?.toFixed(1)} m = ${calculations.breakEven?.toFixed(3)} planes`}
         </div>
       </div>
